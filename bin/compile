@@ -12,7 +12,7 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 
 # use the latest ruby (1.9) in stackato
-export PATH=/opt/rubies/current/bin:$PATH
+# export PATH=/opt/rubies/current/bin:$PATH
 
 CACHED_DIRS="rubygems"
 
@@ -60,6 +60,10 @@ function create_asset_plugin {
     echo "Rails.application.config.serve_static_assets = true" > $PLUGIN_DIR/init.rb
 }
 
+function display_ruby_version {
+	puts-step "Using interpreter version:"
+	ruby -v | indent
+}
 
 cd $BUILD_DIR
 
@@ -70,6 +74,7 @@ for dir in $CACHED_DIRS; do
 done
 
 
+display_ruby_version
 bundle_install
 write_database_yml
 write_boot_config
